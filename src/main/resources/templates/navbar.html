@@ -13,10 +13,18 @@
             <a  th:href="@{/}">User Management</a>
         </div>
         <ul>
-            <li sec:authorize="!isAuthenticated()"><a th:href="@{login}">Login</a></li>
+            <div sec:authorize="!isAuthenticated()">
+                <li><a th:href="@{/login}">Sign in</a></li>
+            </div>
+            <div sec:authorize="isAuthenticated()">
+                <li><a th:href="@{/logout}">Logout (<span sec:authentication="principal.username"/>)</a></li>
+            </div>
+
+
+<!--            <li sec:authorize="!isAuthenticated()"><a th:href="@{login}">Login</a></li>-->
             <li sec:authorize="hasAnyRole('USER', 'ADMIN')"><a th:href="@{user}">User</a></li>
             <li sec:authorize="hasRole('ADMIN')"><a th:href="@{admin}">Admin</a></li>
-            <li sec:authorize="isAuthenticated()"><a  th:href="@{logout}">Logout</a></li>
+<!--            <li sec:authorize="isAuthenticated()"><a  th:href="@{logout}">Logout</a></li>-->
         </ul>
     </div>
 </nav>
