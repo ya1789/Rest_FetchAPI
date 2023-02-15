@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org" >
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create User</title>
+</head>
+<body>
+
+<div th:insert="navbar :: navbar"></div>
+
+<form th:action="@{user-create}" th:object="${user}" method="post">
+    <label for="username">Username</label>
+    </br>
+    <input type="text" th:field="*{username}" id="username" placeholder="Enter your username">
+    </br>
+
+    <label for="firstname">First Name</label>
+    </br>
+    <input type="text" th:field="*{firstname}" id="firstname" placeholder="First Name">
+    </br>
+
+    <label for="lastname">Last Name</label>
+    </br>
+    <input type="text" th:field="*{lastname}" id="lastname" placeholder="Last Name">
+    </br>
+
+    <label for="email">Email</label>
+    </br>
+    <input type="text" th:field="*{email}" id="email" placeholder="Email">
+    </br>
+
+    <label for="age">Age</label>
+    </br>
+    <input type="number" th:field="*{age}" id="age" placeholder="Age">
+    </br>
+
+    <label>Roles:
+        <input type="checkbox" name="roles"
+               th:each="role : ${roles}"
+               th:text="${role.name}"
+               th:value="${role.id}"
+               th:field="*{roles}"/>
+    </label>
+    </br>
+    <label for="password">Password</label>
+    </br>
+    <input type="password" th:field="*{password}" id="password" placeholder="Enter your password">
+    </br>
+    <input type="submit" value="Create User!">
+</form>
+
+</body>
+</html>
