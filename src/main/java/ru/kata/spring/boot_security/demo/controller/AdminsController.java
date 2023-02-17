@@ -20,18 +20,21 @@ public class AdminsController {
     private final UserService userService;
     private final RoleService roleService;
     private final PasswordEncoder passwordEncoder;
+
     @Autowired
     public AdminsController(UserService userService, RoleService roleService, PasswordEncoder passwordEncoder) {
         this.userService = userService;
         this.roleService = roleService;
         this.passwordEncoder = passwordEncoder;
     }
+
     @GetMapping("")
     public String createUserForm(ModelMap model, Principal principal) {
         model.addAttribute("admin", principal);
         model.addAttribute("users", userService.findAll());
         return "admin";
     }
+
     @GetMapping("/user-create")
     public ModelAndView createUserForm() {
         User user = new User();
@@ -41,6 +44,7 @@ public class AdminsController {
         mav.addObject("roles", roles);
         return mav;
     }
+
     @PostMapping("/user-create")
     public String createUser(@ModelAttribute("user") User user) {
         userService.saveUser(user);
@@ -52,6 +56,7 @@ public class AdminsController {
         userService.deleteUser(id);
         return "redirect:/admin";
     }
+
     @GetMapping("/user-update/{id}")
     public ModelAndView updateUserForm(@ModelAttribute("user") User user, @PathVariable("id") Long id) {
         User userToUpdate = userService.findById(id);
@@ -67,8 +72,6 @@ public class AdminsController {
         userService.updateUser(user);
         return "redirect:/admin";
     }
-
-
 
 
 }

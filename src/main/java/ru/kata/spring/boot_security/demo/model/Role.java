@@ -1,7 +1,6 @@
 package ru.kata.spring.boot_security.demo.model;
 
 import com.sun.istack.NotNull;
-import jdk.jfr.DataAmount;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
