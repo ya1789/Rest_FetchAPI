@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/")
 public class IndexController {
+
     @GetMapping(value = "")
     public String index() {
         return "redirect:/login";
