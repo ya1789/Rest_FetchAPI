@@ -19,9 +19,6 @@ public class User implements UserDetails {
     @NotNull
     private Long id;
     @NotNull
-    @Column(name = "username", unique = true)
-    private String username;
-    @NotNull
     @Column(name = "first_name")
     private String firstname;
     @NotNull
@@ -40,7 +37,6 @@ public class User implements UserDetails {
     @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
-    @Fetch(FetchMode.JOIN)
     private Set<Role> roles = new HashSet<>();
 
     public User() {
@@ -48,7 +44,6 @@ public class User implements UserDetails {
 
     public User(Long id, String username, String firstname, String lastname, String email, String password, Byte age, Set<Role> roles) {
         this.id = id;
-        this.username = username;
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
@@ -65,9 +60,6 @@ public class User implements UserDetails {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
-    }
 
     @Override
     public boolean isAccountNonExpired() {
@@ -89,9 +81,6 @@ public class User implements UserDetails {
         return true;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
 
     public String getFirstname() {
         return firstname;
@@ -120,6 +109,11 @@ public class User implements UserDetails {
 
     public String getPassword() {
         return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
     }
 
     public void setPassword(String password) {
@@ -151,7 +145,6 @@ public class User implements UserDetails {
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", username='" + username + '\'' +
                 ", firstname='" + firstname + '\'' +
                 ", lastname='" + lastname + '\'' +
                 ", email='" + email + '\'' +
@@ -159,5 +152,14 @@ public class User implements UserDetails {
                 ", age=" + age +
                 ", roles=" + roles +
                 '}';
+    }
+
+    public String getFormattedRoles() {
+        StringBuffer stringBuffer = new StringBuffer(100);
+        for (Role role : getRoles()) {
+            stringBuffer.append(role.getFormattedRole());
+            stringBuffer.append(' ');
+        }
+        return stringBuffer.toString();
     }
 }

@@ -1,54 +1,74 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org" >
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
     <title>Create User</title>
 </head>
 <body>
+<div class="container col-6 form-group text-center" th:fragment="user_create(roles)">
+    <form align="center"
+          th:action="@{admin/user-create}" th:object="${user}" method="post">
+        <label for="firstname"><b>First name</b></label>
+        <input th:name="firstname" th:type="text"
+               class="form-control" id="firstname"
+               value=""
+               style="width:40vh; margin-left:auto; margin-right:auto"
+               required/>
 
-<div th:insert="navbar :: navbar"></div>
+        <label for="lastname"><b>Last name</b></label>
+        <input th:name="lastname" th:type="text"
+               class="form-control" id="lastname"
+               value=""
+               style="width:40vh; margin-left:auto; margin-right:auto"
+               required/>
 
-<form th:action="@{user-create}" th:object="${user}" method="post">
-    <label for="username">Username</label>
-    </br>
-    <input type="text" th:field="*{username}" id="username" placeholder="Enter your username">
-    </br>
+        <label for="age"><b>Age</b></label>
+        <input th:name="age" th:type="number"
+               class="form-control" id="age"
+               value=""
+               style="width:40vh; margin-left:auto; margin-right:auto"
 
-    <label for="firstname">First Name</label>
-    </br>
-    <input type="text" th:field="*{firstname}" id="firstname" placeholder="First Name">
-    </br>
+        <label for="email"><b>Email</b></label>
+        <input th:name="email" th:type="text"
+               class="form-control" id="email"
+               value=""
+               style="width:40vh; margin-left:auto; margin-right:auto"
+               required/>
 
-    <label for="lastname">Last Name</label>
-    </br>
-    <input type="text" th:field="*{lastname}" id="lastname" placeholder="Last Name">
-    </br>
+        <label for="password"><b>Password</b></label>
+        <input th:name="password" type="text"
+               class="form-control" id="password"
+               value=""
+               style="width:40vh; margin-left:auto; margin-right:auto"
+               required/>
+        <div class="form-group text-center">
+            <label for="roles"><b>Role</b></label>
+            <select size="2" multiple
+                    class="form-control form-control-sm"
+                    id="roles" th:name="roles" required
+                    style="width:40vh; margin-left:auto; margin-right:auto">
+                <option th:each="role : ${roles}"
+                        th:text="${role.getFormattedRole()}"
+                        th:value="${role.id}">Role
+                </option>
+            </select>
+        </div>
+        <button th:type="submit" class="btn btn-success mt-3">Add new User</button>
+    </form>
+</div>
+</div>
 
-    <label for="email">Email</label>
-    </br>
-    <input type="text" th:field="*{email}" id="email" placeholder="Email">
-    </br>
 
-    <label for="age">Age</label>
-    </br>
-    <input type="number" th:field="*{age}" id="age" placeholder="Age">
-    </br>
-
-    <label>Roles:
-        <input type="checkbox" name="roles"
-               th:each="role : ${roles}"
-               th:text="${role.name}"
-               th:value="${role.id}"
-               th:field="*{roles}"/>
-    </label>
-    </br>
-    <label for="password">Password</label>
-    </br>
-    <input type="password" th:field="*{password}" id="password" placeholder="Enter your password">
-    </br>
-    <input type="submit" value="Create User!">
-</form>
-
+<!--Bootstrap Js-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+        crossorigin="anonymous"></script>
 </body>
 </html>

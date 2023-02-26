@@ -2,6 +2,7 @@ package ru.kata.spring.boot_security.demo.model;
 
 import com.sun.istack.NotNull;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.util.StringUtils;
 
 import javax.persistence.*;
 
@@ -12,6 +13,7 @@ public class Role implements GrantedAuthority {
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
     @NotNull
     private Long id;
+    @Column
     private String name;
 
     public Role() {
@@ -41,6 +43,10 @@ public class Role implements GrantedAuthority {
     @Override
     public String getAuthority() {
         return getName();
+    }
+
+    public String getFormattedRole() {
+        return StringUtils.capitalize(getName().substring(5).toLowerCase());
     }
 
     @Override

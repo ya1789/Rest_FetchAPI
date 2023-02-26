@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 
     @Override
     public void saveUser(User user) {
-        if (userRepository.findByUsername(user.getUsername()) == null) {
+        if (userRepository.findByEmail(user.getUsername()) == null) {
             userRepository.save(new User(user.getId(), user.getUsername(), user.getFirstname(), user.getLastname(), user.getEmail(), passwordEncoder().encode(user.getPassword()), user.getAge(), user.getRoles()));
         }
     }
@@ -67,14 +67,14 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         return userRepository.findById(id).orElse(null);
     }
 
-    public User findByUsername(String username) {
-        return userRepository.findByUsername(username);
+    public User findByEmail(String username) {
+        return userRepository.findByEmail(username);
     }
 
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = findByUsername(username);
+        User user = findByEmail(username);
         if (user == null) {
             throw new UsernameNotFoundException(String.format("User '%s' not found", username));
         }

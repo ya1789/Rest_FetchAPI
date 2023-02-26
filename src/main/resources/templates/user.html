@@ -1,22 +1,82 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
     <title>Spring Security Example</title>
 </head>
 <body>
-<div th:insert="navbar :: navbar"></div>
-<th:block>
-    <b><p><span th:text="${user.getUsername()}"/>, hello!</p></b>
+<div class="vh-100 d-flex flex-column tab-content" id="pills-tabContent">
 
-    <div>
-        <p>First name: <span th:text="${user.getFirstname()}"/></p>
-        <p>Last name: <span th:text="${user.getLastname()}"/></p>
-        <p>Email: <span th:text="${user.getEmail()}"/></p>
-        <p>Age: <span th:text="${user.getAge()}"/></p>
-        <th:block th:each="role : ${user.getRoles()}">
-            <p th:text="${role.getName()}"></p>
-        </th:block>
+    <div th:insert="header :: navbar(email=${user.getEmail()}, roles=${user.getFormattedRoles()})"></div>
+
+    <div class="d-flex flex-row flex-grow-1">
+        <div class="nav flex-column nav-pills" style="min-width: 250px;max-width: 20%;" id="v-pills-tab" role="tablist"
+             aria-orientation="vertical"
+             th:fragment="sidebar">
+            <nav class="navbar navbar-light navbar-light bg-primary fixed-left">
+
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a sec:authorize="hasRole('ADMIN')" th:href="@{admin}" type="button" class="nav-link active"
+                           role="tab" aria-controls="v-pills-admin" aria-selected="true">Admin</a>
+
+                    </li>
+                    <a></a>
+                    <li class="nav-item">
+                        <a th:href="@{user}" type="button" class="nav-link active" role="tab"
+                           aria-controls="v-pills-user" aria-selected="false">User</a>
+
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
+        <!--<div class="flex-grow-1 bg-light p-3">-->
+        <div class="container-fluid">
+            <h1>User information page</h1>
+            <div class="container-fluid">
+                <div class="bg-light row border">
+                    <h5 class="m-2">About user</h5>
+                </div>
+
+                <div class="row border bg-white pb-2">
+                    <table class="table table-striped table-hover table-sm">
+                        <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Age</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <th th:text="${user.id}"></th>
+                            <td th:text="${user.firstname}"></td>
+                            <td th:text="${user.lastname}"></td>
+                            <td th:text="${user.age}"></td>
+                            <td th:text="${user.email}"></td>
+                            <td>
+                                <th:block th:each="role : ${user.getRoles()}">
+                                    <p th:text="${role.getFormattedRole()}"></p>
+                                </th:block>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
-</th:block>
+</div>
 </body>
 </html>
