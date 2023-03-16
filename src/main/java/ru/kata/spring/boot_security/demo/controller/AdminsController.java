@@ -21,30 +21,24 @@ public class AdminsController {
 
     private final RoleService roleService;
 
-    private final PasswordEncoder passwordEncoder;
 
-    public AdminsController(UserService userService, RoleServiceImpl roleService, PasswordEncoder passwordEncoder) {
+    public AdminsController(UserService userService, RoleServiceImpl roleService) {
         this.userService = userService;
         this.roleService = roleService;
-        this.passwordEncoder = passwordEncoder;
     }
 
-    @GetMapping("")
+    @GetMapping
     public String index(ModelMap model, Principal principal) {
-        User admin = userService.findByEmail(principal.getName());
-        model.addAttribute("admin", admin);
+        model.addAttribute("admin", userService.findByEmail(principal.getName()));
         model.addAttribute("users", userService.findAll());
-        List<Role> roles = roleService.findAll();
-        model.addAttribute("roles", roles);
+        model.addAttribute("roles", roleService.findAll());
         return "admin";
     }
     @GetMapping("/user-create")
     public ModelAndView createUserForm() {
-        User user = new User();
         ModelAndView mav = new ModelAndView("user-create");
-        mav.addObject("user", user);
-        List<Role> roles = roleService.findAll();
-        mav.addObject("roles", roles);
+        mav.addObject("user", new User());
+        mav.addObject("roles", roleService.findAll());
         return mav;
     }
 
@@ -62,17 +56,14 @@ public class AdminsController {
 
     @GetMapping("/user-update/{id}")
     public ModelAndView updateUserForm(@ModelAttribute("user") User user, @PathVariable("id") Long id) {
-        User userToUpdate = userService.findById(id);
         ModelAndView mav = new ModelAndView("admin");
-        mav.addObject("user", userToUpdate);
-        List<Role> roles = roleService.findAll();
-        mav.addObject("roles", roles);
+        mav.addObject("user", userService.findById(id));
+        mav.addObject("roles", roleService.findAll());
         return mav;
     }
 
     @PutMapping("/user-update")
     public String updateUser(@ModelAttribute("user") User user) {
-        System.out.println("USER TO UPDATE " + user.toString());
         userService.updateUser(user);
         return "redirect:/admin";
     }

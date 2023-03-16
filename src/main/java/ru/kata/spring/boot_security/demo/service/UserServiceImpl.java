@@ -1,6 +1,8 @@
 package ru.kata.spring.boot_security.demo.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,6 +14,8 @@ import org.springframework.stereotype.Service;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.repository.UserRepository;
+import ru.kata.spring.boot_security.demo.configs.WebSecurityConfig;
+
 
 import javax.transaction.Transactional;
 import java.util.Collection;
@@ -21,10 +25,20 @@ import java.util.stream.Collectors;
 @Service
 public class UserServiceImpl implements UserDetailsService, UserService {
     private final UserRepository userRepository;
+    private PasswordEncoder passwordEncoder;
+
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
+    }
+    @Autowired
+    public PasswordEncoder getPasswordEncoder() {
+        return passwordEncoder;
+    }
+
+    public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -35,25 +49,22 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     @Override
     public void saveUser(User user) {
         if (userRepository.findByEmail(user.getUsername()) == null) {
-            userRepository.save(new User(user.getId(), user.getUsername(), user.getFirstname(), user.getLastname(), user.getEmail(), passwordEncoder().encode(user.getPassword()), user.getAge(), user.getRoles()));
+            userRepository.save( new User(user.getId(), user.getUsername(), user.getFirstname(),
+                    user.getLastname(), user.getEmail(), passwordEncoder.encode(user.getPassword()),
+                    user.getAge(), user.getRoles()));
         }
     }
 
     @Override
     public void updateUser(User user) {
-        User userDB = findById(user.getId());
 
-        if (passwordEncoder().matches(user.getPassword(), userDB.getPassword())) {
-            user.setPassword(userDB.getPassword());
+        if (passwordEncoder.matches(user.getPassword(), findById(user.getId()).getPassword())) {
+            user.setPassword(findById(user.getId()).getPassword());
         } else {
-            user.setPassword(user.getPassword());
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
         }
         userRepository.save(user);
 
-    }
-
-    private PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
     }
 
     @Override
@@ -73,12 +84,11 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 
     @Override
     @Transactional
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = findByEmail(username);
-        if (user == null) {
+    public User loadUserByUsername(String username) throws UsernameNotFoundException {
+        if (findByEmail(username) == null) {
             throw new UsernameNotFoundException(String.format("User '%s' not found", username));
         }
-        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), mapRolesToAuthorities(user.getRoles()));
+        return findByEmail(username);
     }
 
     private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {

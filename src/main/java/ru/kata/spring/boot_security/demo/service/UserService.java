@@ -7,7 +7,7 @@ import ru.kata.spring.boot_security.demo.model.User;
 
 import java.util.List;
 
-public interface UserService extends UserDetailsService {
+public interface UserService {
     List<User> findAll();
 
     void saveUser(User user);
@@ -20,6 +20,6 @@ public interface UserService extends UserDetailsService {
 
     User findByEmail(String username);
 
-    @Override
+
     UserDetails loadUserByUsername(String username) throws UsernameNotFoundException;
 }
