@@ -1,18 +1,17 @@
 package ru.kata.spring.boot_security.demo.controller;
 
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import ru.kata.spring.boot_security.demo.model.Role;
+
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.service.RoleService;
 import ru.kata.spring.boot_security.demo.service.RoleServiceImpl;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
 import java.security.Principal;
-import java.util.List;
+
 
 @Controller
 @RequestMapping(value = "/admin")
@@ -33,6 +32,11 @@ public class AdminsController {
         model.addAttribute("users", userService.findAll());
         model.addAttribute("roles", roleService.findAll());
         return "admin";
+    }
+
+    @GetMapping("/")
+    public String index() {
+        return "redirect:/login";
     }
     @GetMapping("/user-create")
     public ModelAndView createUserForm() {
