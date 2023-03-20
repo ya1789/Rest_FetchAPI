@@ -24,11 +24,6 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
     }
-    @Autowired
-    public PasswordEncoder getPasswordEncoder() {
-        return passwordEncoder;
-    }
-
 
     @Override
     public List<User> findAll() {
