@@ -55,7 +55,9 @@
                     </div>
                     <div class="row border bg-white pb-2">
                         <h5></h5>
-                        <div th:insert="all-users :: all_users(users=${users}, roles=${roles})"></div>
+                        <div th:insert="all-users :: all_users(roles=${roles})"></div>
+                        <script>src="users-table.js"</script>
+
                     </div>
                     </div>
                 <div class="tab-pane container fade" id="add-user">
