@@ -58,19 +58,7 @@
                             <th>Role</th>
                         </tr>
                         </thead>
-                        <tbody>
-                        <tr>
-                            <th th:text="${user.id}"></th>
-                            <td th:text="${user.firstname}"></td>
-                            <td th:text="${user.lastname}"></td>
-                            <td th:text="${user.age}"></td>
-                            <td th:text="${user.email}"></td>
-                            <td>
-                                <th:block th:each="role : ${user.getRoles()}">
-                                    <p th:text="${role.getFormattedRole()}"></p>
-                                </th:block>
-                            </td>
-                        </tr>
+                        <tbody id="user-table-body">
                         </tbody>
                     </table>
                 </div>
@@ -78,5 +66,7 @@
         </div>
     </div>
 </div>
+<script type="text/javascript" src="/js/user.js"></script>
+
 </body>
 </html>

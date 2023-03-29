@@ -32,7 +32,7 @@
         </table>
 
 
-        <div class="modal fade"
+        <div class="modal fade" id="updateUser"
              aria-labelledby="editUserLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
@@ -42,7 +42,7 @@
                                 aria-label="Close">
                         </button>
                     </div>
-                    <form class="modal-body col-md text-center" id="editUser">
+                    <form id="update user form">
                         <div class="modal-body col-md text-center">
                             <br>
                             <label for="id"><b>ID</b></label>
@@ -71,20 +71,19 @@
                                    style="width:25vh; margin-left:auto; margin-right:auto"/>
                             <br>
                             <div class="form-group text-center">
-                                <label for="roles"><b>Role</b></label>
-                                <select size="2" multiple
+                                <label for="rolesUpdate"><b>Role</b></label>
+                                <select  multiple
+                                        size="2"
                                         class="form-control form-control-sm"
-                                        id="roles" th:name="roles" required
-                                        style="width:25vh; margin-left:auto; margin-right:auto">
-                                    <option th:each="role : ${roles}"
-                                            th:text="${role.name}"
-                                            th:value="${role.id}">Role
-                                    </option>
+                                        id="rolesUpdate" name="roles"
+                                         style="width:25vh; margin-left:auto; margin-right:auto">
+                                    <option value="1">ADMIN</option>
+                                    <option value="2">USER</option>
                                 </select>
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary"
+                            <button type="button" id="close button update" class="btn btn-secondary"
                                     data-bs-dismiss="modal">Close
                             </button>
                             <button type="submit" class="btn btn-primary">
@@ -96,7 +95,7 @@
             </div>
         </div>
 
-        <div class="modal fade" aria-labelledby="deleteUserLabel" aria-hidden="true">
+        <div class="modal fade" id="deleteUser" aria-labelledby="deleteUserLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -107,8 +106,7 @@
                                 aria-label="Close">
                         </button>
                     </div>
-                    <form class="modal-body col-md text-center"
-                          id="deleteUser">
+                    <form class="modal-body col-md text-center">
                         <div class="modal-body col-md text-center">
                             <label for="id1"><b>ID</b></label>
                             <input class="form-control" id="id1"
@@ -149,6 +147,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary"
+                                    id="close button delete"
                                     data-bs-dismiss="modal">Close
                             </button>
                             <button type="submit" class="btn btn-danger">Delete
@@ -160,7 +159,7 @@
         </div>
 
 
-        <script>src="users-table.js"</script>
+<!--        <script>src="users-table.js"</script>-->
 
     </div>
 </div>

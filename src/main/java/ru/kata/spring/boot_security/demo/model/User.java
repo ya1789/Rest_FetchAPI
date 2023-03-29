@@ -33,7 +33,7 @@ public class User implements UserDetails {
     @Column(name = "age")
     private Byte age;
     @Column(name="roles")
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))

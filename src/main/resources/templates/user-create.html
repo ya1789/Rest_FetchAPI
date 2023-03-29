@@ -13,54 +13,52 @@
 </head>
 <body>
 <div class="container col-6 form-group text-center" th:fragment="user_create(roles)">
-    <form align="center"
-          th:action="@{admin/user-create}" th:object="${user}" method="post">
+    <form id="new-user-form" align="center">
         <label for="firstname"><b>First name</b></label>
-        <input th:name="firstname" th:type="text"
+        <input name="firstname" type="text"
                class="form-control" id="firstname"
                value=""
                style="width:40vh; margin-left:auto; margin-right:auto"
                required/>
 
         <label for="lastname"><b>Last name</b></label>
-        <input th:name="lastname" th:type="text"
+        <input name="lastname" type="text"
                class="form-control" id="lastname"
                value=""
                style="width:40vh; margin-left:auto; margin-right:auto"
                required/>
 
         <label for="age"><b>Age</b></label>
-        <input th:name="age" th:type="number"
+        <input name="age" type="number"
                class="form-control" id="age"
                value=""
                style="width:40vh; margin-left:auto; margin-right:auto"
+               required/>
 
         <label for="email"><b>Email</b></label>
-        <input th:name="email" th:type="text"
+        <input name="email" type="text"
                class="form-control" id="email"
                value=""
                style="width:40vh; margin-left:auto; margin-right:auto"
                required/>
 
         <label for="password"><b>Password</b></label>
-        <input th:name="password" type="text"
+        <input name="password" type="text"
                class="form-control" id="password"
                value=""
                style="width:40vh; margin-left:auto; margin-right:auto"
                required/>
         <div class="form-group text-center">
-            <label for="roles"><b>Role</b></label>
-            <select size="2" multiple
-                    class="form-control form-control-sm"
-                    id="roles" th:name="roles" required
+            <label for="rolesCreate"><b>Role</b></label>
+            <select multiple
+                    class="form-control"
+                    name="roles" id="rolesCreate" size="2"
                     style="width:40vh; margin-left:auto; margin-right:auto">
-                <option th:each="role : ${roles}"
-                        th:text="${role.getFormattedRole()}"
-                        th:value="${role.id}">Role
-                </option>
+                <option value="1">ADMIN</option>
+                <option value="2">USER</option>
             </select>
         </div>
-        <button th:type="submit" class="btn btn-success mt-3">Add new User</button>
+        <button type="submit" class="btn btn-success mt-3">Add new User</button>
     </form>
 </div>
 </div>
