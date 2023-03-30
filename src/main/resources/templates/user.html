@@ -14,7 +14,7 @@
 <body>
 <div class="vh-100 d-flex flex-column tab-content" id="pills-tabContent">
 
-    <div th:insert="header :: navbar(email=${user.getEmail()}, roles=${user.getFormattedRoles()})"></div>
+    <div th:insert="header :: navbar"></div>
 
     <div class="d-flex flex-row flex-grow-1">
         <div class="nav flex-column nav-pills" style="min-width: 250px;max-width: 20%;" id="v-pills-tab" role="tablist"

@@ -1,11 +1,12 @@
 const usersTable = document.getElementById("users-table-body")
-const ALL_USERS_URL = '/api/admin'
+const ALL_USERS_URL = 'api/admin'
 document.addEventListener('DOMContentLoaded', loadUsers)
 
 async function loadUsers() {
     let emptyTab = '';
-    (await (await fetch(ALL_USERS_URL)).json()).forEach((user) => {
-
+    let users = await (await fetch(ALL_USERS_URL)).json();
+    console.log(users)
+    users.forEach((user) => {
         emptyTab += `<tr>
         <td>${user.id}</td>
         <td>${user.firstname} </td>
@@ -28,7 +29,7 @@ async function loadUsers() {
             </a>
         </td>
       </tr>`;
-    });
+    })
     usersTable.innerHTML = emptyTab
-}
+};
 

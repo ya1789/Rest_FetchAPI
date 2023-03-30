@@ -12,10 +12,11 @@
 </head>
 <body>
 
-<nav class="navbar navbar-dark bg-dark" th:fragment="navbar (email, roles)">
+<nav class="navbar navbar-dark bg-dark" th:fragment="navbar">
     <div class="container-fluid d-flex justify-content-between">
-        <a class="navbar-brand"><b><span th:text="${email}"/></b> with roles: <span th:each="role : ${roles}"
-                                                                             th:text="${role}"/></a>
+        <a class="navbar-brand"><b><span th:utext="${#authentication.name}"/></b> with roles: <span th:each="authority : ${#authentication.getAuthorities()}"
+                                                                                                    th:if="${authority.getAuthority().startsWith('ROLE_')}"
+                                                                                                    th:text="${authority.getAuthority().replaceFirst('ROLE_', ' ')}"/></a>
         <a class="link-secondary text-decoration-none" href="/logout">Logout</a>
     </div>
 </nav>

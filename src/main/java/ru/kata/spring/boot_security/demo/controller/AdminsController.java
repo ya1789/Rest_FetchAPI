@@ -5,10 +5,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import ru.kata.spring.boot_security.demo.model.User;
+import ru.kata.spring.boot_security.demo.service.RoleService;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
 import java.util.List;
-
 
 @RestController
 @RequestMapping("api/admin")
@@ -16,9 +16,9 @@ public class AdminsController {
     private final UserService userService;
 
     public AdminsController(UserService userService) {
-
         this.userService = userService;
     }
+
     @GetMapping
     public ResponseEntity<List<User>> getAll() {
         return ResponseEntity.ok(userService.findAll());
@@ -35,7 +35,7 @@ public class AdminsController {
     }
 
     @PutMapping("/users/update/{id}")
-    public ResponseEntity<User> update(@RequestBody User user, @PathVariable("id") Long id) {
+    public ResponseEntity<User> update(@RequestBody User user, @PathVariable Long id) {
         userService.updateUser(user);
         return new ResponseEntity<>(HttpStatus.OK);
     }
